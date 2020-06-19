@@ -165,9 +165,6 @@ var _ = Describe("Podman images", func() {
 
 		//// PRAGMA DEBUG BEGIN
 		_, _ = fmt.Fprintf(GinkgoWriter, "[DEBUG] OUTPUT LINE\n")
-		// Validates that the image is no longer tagged
-		_, err := images.GetImage(bt.conn, "alpine:untag", nil)
-		Expect(err).ToNot(BeNil())
 		//// PRAGMA DEBUG END
 
 		// Validates if the image is tagged successfully.
@@ -179,7 +176,7 @@ var _ = Describe("Podman images", func() {
 		Expect(err).To(BeNil())
 
 		// Validates that the image is no longer tagged
-		_, err := images.GetImage(bt.conn, "alpine:untag", nil)
+		_, err = images.GetImage(bt.conn, "alpine:untag", nil)
 		Expect(err).ToNot(BeNil())
 
 		// No detection for bad parameter error (400) or conflict error (409)
