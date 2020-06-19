@@ -162,9 +162,10 @@ var _ = Describe("Podman images", func() {
 		code, _ := bindings.CheckResponseCode(err)
 		Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
-		// Validates if name updates when the image is retagged.
-		_, err = images.GetImage(bt.conn, "alpine:demo", nil)
+		// Validates if the image is tagged successfully.
+		err = images.Tag(bt.conn, alpine.shortName, "untag", alpine.shortName)
 		Expect(err).To(BeNil())
+
 		/*
 			// Validates if untag proceeds successfully
 			err = images.Untag(bt.conn, alpine.shortName, "demo", alpine.shortName)
