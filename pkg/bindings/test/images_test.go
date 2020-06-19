@@ -163,12 +163,13 @@ var _ = Describe("Podman images", func() {
 		code, _ := bindings.CheckResponseCode(err)
 		Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
+		// Validates if invalid image tag is given a bad response is encountered.
+		err = images.Untag(bt.conn, alpine.shortName, "demo", alpine.shortName)
+		Expect(err).ToNot(BeNil())
+		code, _ = bindings.CheckResponseCode(err)
+		Expect(code).To(BeNumerically("==", http.StatusNotFound))
+
 		/*
-			// Validates if invalid image tag is given a bad response is encountered.
-			err = images.Untag(bt.conn, "dummy", "demo", alpine.shortName)
-			Expect(err).ToNot(BeNil())
-			code, _ = bindings.CheckResponseCode(err)
-			Expect(code).To(BeNumerically("==", http.StatusBadRequest))
 
 			// No detection for conflict error (409)
 
@@ -179,6 +180,7 @@ var _ = Describe("Podman images", func() {
 			// Validates if name update when image is untagged.
 			_, err = images.GetImage(bt.conn, "alpine:demo", nil)
 			Expect(err).ToNot(BeNil()) // Fix this with specific error
+
 		*/
 
 	})
