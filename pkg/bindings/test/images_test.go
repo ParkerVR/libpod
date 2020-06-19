@@ -157,20 +157,19 @@ var _ = Describe("Podman images", func() {
 	// Tests to validate the image untag command.
 	It("untag image", func() {
 
+		// Validates if invalid image name is given a bad parameter is encountered.
+		err = images.Untag(bt.conn, "dummy", "demo", alpine.shortName)
+		Expect(err).ToNot(BeNil())
+		code, _ := bindings.CheckResponseCode(err)
+		Expect(code).To(BeNumerically("==", http.StatusNotFound))
+
 		/*
 			// Validates if invalid image tag is given a bad response is encountered.
 			err = images.Untag(bt.conn, "dummy", "demo", alpine.shortName)
 			Expect(err).ToNot(BeNil())
-			code, _ := bindings.CheckResponseCode(err)
+			code, _ = bindings.CheckResponseCode(err)
 			Expect(code).To(BeNumerically("==", http.StatusBadRequest))
-		*/
 
-		// Validates if invalid image name is given a bad parameter is encountered.
-		err = images.Untag(bt.conn, "dummy", "demo", alpine.shortName)
-		Expect(err).ToNot(BeNil())
-		code, _ = bindings.CheckResponseCode(err)
-		Expect(code).To(BeNumerically("==", http.StatusNotFound))
-		/*
 			// No detection for conflict error (409)
 
 			// Validates if the image is untagged successfully.
