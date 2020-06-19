@@ -166,7 +166,7 @@ var _ = Describe("Podman images", func() {
 		// Validates if invalid image name is given a bad parameter is encountered.
 		err = images.Untag(bt.conn, "dummy", "demo", alpine.shortName)
 		Expect(err).ToNot(BeNil())
-		code, _ := bindings.CheckResponseCode(err)
+		code, _ = bindings.CheckResponseCode(err)
 		Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
 		// No detection for conflict error (409)
