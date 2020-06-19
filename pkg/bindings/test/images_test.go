@@ -164,7 +164,7 @@ var _ = Describe("Podman images", func() {
 		Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
 		//// PRAGMA DEBUG BEGIN
-		_, _ = fmt.Fprintf(GinkgoWriter, "[DEBUG] OUTPUT LINE: %s\n", line)
+		_, _ = fmt.Fprintf(GinkgoWriter, "[DEBUG] OUTPUT LINE\n")
 		// Validates that the image is no longer tagged
 		_, err := images.GetImage(bt.conn, "alpine:untag", nil)
 		Expect(err).ToNot(BeNil())
