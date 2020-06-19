@@ -164,7 +164,7 @@ var _ = Describe("Podman images", func() {
 		Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
 		// Validates if name updates when the image is retagged.
-		_, err := images.GetImage(bt.conn, "alpine:demo", nil)
+		_, err = images.GetImage(bt.conn, "alpine:demo", nil)
 		Expect(err).To(BeNil())
 
 		// Validates if untag proceeds successfully
@@ -172,7 +172,7 @@ var _ = Describe("Podman images", func() {
 		Expect(err).To(BeNil())
 
 		// Check that the image is no longer tagged
-		_, err := images.GetImage(bt.conn, "alpine:demo", nil)
+		_, err = images.GetImage(bt.conn, "alpine:demo", nil)
 		Expect(err).ToNot(BeNil())
 
 		// No detection for conflict error (409)
