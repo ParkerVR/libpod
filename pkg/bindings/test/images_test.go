@@ -163,21 +163,23 @@ var _ = Describe("Podman images", func() {
 		code, _ := bindings.CheckResponseCode(err)
 		Expect(code).To(BeNumerically("==", http.StatusBadRequest))
 
-		// Validates if invalid image name is given a bad parameter is encountered.
-		err = images.Untag(bt.conn, "dummy", "demo", alpine.shortName)
-		Expect(err).ToNot(BeNil())
-		code, _ = bindings.CheckResponseCode(err)
-		Expect(code).To(BeNumerically("==", http.StatusNotFound))
+		/*
+			// Validates if invalid image name is given a bad parameter is encountered.
+			err = images.Untag(bt.conn, "dummy", "demo", alpine.shortName)
+			Expect(err).ToNot(BeNil())
+			code, _ = bindings.CheckResponseCode(err)
+			Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
-		// No detection for conflict error (409)
+			// No detection for conflict error (409)
 
-		// Validates if the image is untagged successfully.
-		err = images.Untag(bt.conn, alpine.shortName, "demo", alpine.shortName)
-		Expect(err).To(BeNil())
+			// Validates if the image is untagged successfully.
+			err = images.Untag(bt.conn, alpine.shortName, "demo", alpine.shortName)
+			Expect(err).To(BeNil())
 
-		// Validates if name update when image is untagged.
-		_, err = images.GetImage(bt.conn, "alpine:demo", nil)
-		Expect(err).ToNot(BeNil()) // Fix this with specific error
+			// Validates if name update when image is untagged.
+			_, err = images.GetImage(bt.conn, "alpine:demo", nil)
+			Expect(err).ToNot(BeNil()) // Fix this with specific error
+		*/
 
 	})
 
