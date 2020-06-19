@@ -164,7 +164,7 @@ var _ = Describe("Podman images", func() {
 		Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
 		//// PRAGMA DEBUG BEGIN
-		fmt.Println("Message")
+		_, _ = fmt.Fprintf(GinkgoWriter, "[DEBUG] OUTPUT LINE: %s\n", line)
 		// Validates that the image is no longer tagged
 		_, err := images.GetImage(bt.conn, "alpine:untag", nil)
 		Expect(err).ToNot(BeNil())
@@ -177,11 +177,11 @@ var _ = Describe("Podman images", func() {
 		// Validates if untag proceeds successfully
 		err = images.Untag(bt.conn, alpine.shortName, "untag", alpine.shortName)
 		Expect(err).To(BeNil())
-		/*
-			// Validates that the image is no longer tagged
-			_, err := images.GetImage(bt.conn, "alpine:untag", nil)
-			Expect(err).ToNot(BeNil())
-		*/
+
+		// Validates that the image is no longer tagged
+		_, err := images.GetImage(bt.conn, "alpine:untag", nil)
+		Expect(err).ToNot(BeNil())
+
 		// No detection for bad parameter error (400) or conflict error (409)
 
 	})
