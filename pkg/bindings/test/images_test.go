@@ -176,8 +176,12 @@ var _ = Describe("Podman images", func() {
 		Expect(err).To(BeNil())
 
 		// Validates that the image is no longer tagged
-		_, err = images.GetImage(bt.conn, "alpine:untag", nil)
+		img, err := images.GetImage(bt.conn, "alpine:untag", nil)
 		Expect(err).ToNot(BeNil())
+
+		//// PRAGMA DEBUG BEGIN
+		_, _ = fmt.Fprintf(GinkgoWriter, "[DEBUG] OUTPUT LINE\n %q", *img)
+		//// PRAGMA DEBUG END
 
 		// No detection for bad parameter error (400) or conflict error (409)
 
