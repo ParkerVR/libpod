@@ -170,11 +170,9 @@ var _ = Describe("Podman images", func() {
 		err = images.Untag(bt.conn, alpine.shortName, "untag", alpine.shortName)
 		Expect(err).To(BeNil())
 
-		/*
-			// Check that the image is no longer tagged
-			_, err = images.GetImage(bt.conn, "alpine:untag", nil)
-			Expect(err).ToNot(BeNil())
-		*/
+		// Check that the image is no longer tagged
+		_, err = images.GetImage(bt.conn, "alpine:untag", nil)
+		Expect(err).To(BeNil())
 
 		// No detection for conflict error (409)
 
