@@ -176,7 +176,7 @@ var _ = Describe("Podman images", func() {
 		Expect(err).To(BeNil())
 
 		// Validates if name update when image is untagged.
-		_, err := images.GetImage(bt.conn, "alpine:demo", nil)
+		_, err = images.GetImage(bt.conn, "alpine:demo", nil)
 		Expect(err).ToNot(BeNil()) // Fix this with specific error
 
 	})
