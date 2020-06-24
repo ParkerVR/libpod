@@ -189,23 +189,14 @@ var _ = Describe("Podman images", func() {
 		// Tree by short name
 		_, err := images.Tree(bt.conn, alpine.shortName, nil)
 		Expect(err).To(BeNil())
-		/*
-			// Tree with full ID
-			_, err = images.Tree(bt.conn, data.ID, nil)
-			Expect(err).To(BeNil())
 
-			// Tree with partial ID
-			_, err = images.Tree(bt.conn, data.ID[0:12], nil)
-			Expect(err).To(BeNil())
-		*/
 		// Tree by long name
 		_, err = images.Tree(bt.conn, alpine.name, nil)
 		Expect(err).To(BeNil())
 
-		// Enabling the size parameter should result in size being populated
+		// Enabling the whatrequires parameter should not break the request
 		_, err = images.Tree(bt.conn, alpine.name, bindings.PTrue)
 		Expect(err).To(BeNil())
-		//Expect(data.Size).To(BeNumerically(">", 0))
 	})
 
 	// Test to validate the List images command.
