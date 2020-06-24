@@ -171,7 +171,7 @@ var _ = Describe("Podman images", func() {
 		Expect(err).To(BeNil())
 
 		// Validates that the image is no longer tagged
-		img, err := images.GetImage(bt.conn, "alpine:untag", nil)
+		_, err := images.GetImage(bt.conn, "alpine:untag", nil)
 		Expect(err).ToNot(BeNil())
 
 		// No detection for bad parameter error (400) or conflict error (409) currently
@@ -187,7 +187,7 @@ var _ = Describe("Podman images", func() {
 		Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
 		// Tree by short name
-		data, err := images.Tree(bt.conn, alpine.shortName, nil)
+		_, err := images.Tree(bt.conn, alpine.shortName, nil)
 		Expect(err).To(BeNil())
 		/*
 			// Tree with full ID
