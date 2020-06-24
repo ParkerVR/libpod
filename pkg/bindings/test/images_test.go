@@ -1,7 +1,6 @@
 package test_bindings
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -163,10 +162,6 @@ var _ = Describe("Podman images", func() {
 		code, _ := bindings.CheckResponseCode(err)
 		Expect(code).To(BeNumerically("==", http.StatusNotFound))
 
-		//// PRAGMA DEBUG BEGIN
-		_, _ = fmt.Fprintf(GinkgoWriter, "[DEBUG] OUTPUT LINE\n")
-		//// PRAGMA DEBUG END
-
 		// Validates if the image is tagged successfully.
 		err = images.Tag(bt.conn, alpine.shortName, "untag", alpine.shortName)
 		Expect(err).To(BeNil())
@@ -179,12 +174,38 @@ var _ = Describe("Podman images", func() {
 		img, err := images.GetImage(bt.conn, "alpine:untag", nil)
 		Expect(err).ToNot(BeNil())
 
-		//// PRAGMA DEBUG BEGIN
-		_, _ = fmt.Fprintf(GinkgoWriter, "[DEBUG] OUTPUT LINE\n %v", *img)
-		//// PRAGMA DEBUG END
+		// No detection for bad parameter error (400) or conflict error (409) currently
 
-		// No detection for bad parameter error (400) or conflict error (409)
+	})
 
+	// Test to validate the image tree command
+	It("image tree", func() {
+		// Tree invalid image expects 404
+		_, err = images.Tree(bt.conn, "foobar5000", nil)
+		Expect(err).ToNot(BeNil())
+		code, _ := bindings.CheckResponseCode(err)
+		Expect(code).To(BeNumerically("==", http.StatusNotFound))
+
+		// Tree by short name
+		data, err := images.Tree(bt.conn, alpine.shortName, nil)
+		Expect(err).To(BeNil())
+
+		// Tree with full ID
+		_, err = images.Tree(bt.conn, data.ID, nil)
+		Expect(err).To(BeNil())
+
+		// Tree with partial ID
+		_, err = images.Tree(bt.conn, data.ID[0:12], nil)
+		Expect(err).To(BeNil())
+
+		// Tree by long name
+		_, err = images.Tree(bt.conn, alpine.name, nil)
+		Expect(err).To(BeNil())
+
+		// Enabling the size parameter should result in size being populated
+		data, err = images.Tree(bt.conn, alpine.name, bindings.PTrue)
+		Expect(err).To(BeNil())
+		Expect(data.Size).To(BeNumerically(">", 0))
 	})
 
 	// Test to validate the List images command.
