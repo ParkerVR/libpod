@@ -203,7 +203,7 @@ var _ = Describe("Podman images", func() {
 		Expect(err).To(BeNil())
 
 		// Enabling the size parameter should result in size being populated
-		data, err = images.Tree(bt.conn, alpine.name, bindings.PTrue)
+		_, err = images.Tree(bt.conn, alpine.name, bindings.PTrue)
 		Expect(err).To(BeNil())
 		//Expect(data.Size).To(BeNumerically(">", 0))
 	})
