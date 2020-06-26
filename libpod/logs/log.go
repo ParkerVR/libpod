@@ -131,7 +131,7 @@ func getTailLog(path string, tail int) ([]*LogLine, error) {
 			}
 			nlls = append(nlls, nll)
 			if !nll.Partial() {
-				nllCounter++
+				//nllCounter++
 			}
 		}
 		// if we have enough loglines, we can hangup
