@@ -116,9 +116,13 @@ func getTailLog(path string, tail int) ([]*LogLine, error) {
 	}()
 
 	for i := range inputs {
+
 		// the incoming array is FIFO; we want FIFO so
 		// reverse the slice read order
 		for j := len(i) - 1; j >= 0; j-- {
+
+			fmt.Println(j)
+
 			// lines that are "" are junk
 			if len(i[j]) < 1 {
 				continue
@@ -131,7 +135,7 @@ func getTailLog(path string, tail int) ([]*LogLine, error) {
 			}
 			nlls = append(nlls, nll)
 			if !nll.Partial() {
-				//nllCounter++
+				nllCounter++
 			}
 		}
 		// if we have enough loglines, we can hangup
@@ -146,14 +150,14 @@ func getTailLog(path string, tail int) ([]*LogLine, error) {
 	// re-assemble the log lines and trim (if needed) to the
 	// tail length
 	for _, nll := range nlls {
-		//if nll.Partial() {
-		//	partial += nll.Msg
-		//} else {
+		if nll.Partial() {
+			partial += nll.Msg
+		} else {
 			nll.Msg += partial
 			// prepend because we need to reverse the order again to FIFO
 			tailLog = append([]*LogLine{nll}, tailLog...)
-		//	partial = ""
-		//}
+			partial = ""
+		}
 		if len(tailLog) == tail {
 			break
 		}
