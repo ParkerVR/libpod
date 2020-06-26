@@ -152,7 +152,7 @@ func getTailLog(path string, tail int) ([]*LogLine, error) {
 			nll.Msg += partial
 			// prepend because we need to reverse the order again to FIFO
 			tailLog = append([]*LogLine{nll}, tailLog...)
-			partial = ""
+		//	partial = ""
 		//}
 		if len(tailLog) == tail {
 			break
