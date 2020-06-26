@@ -78,6 +78,9 @@ func GetLogFile(path string, options *LogOptions) (*tail.Tail, []*LogLine, error
 }
 
 func getTailLog(path string, tail int) ([]*LogLine, error) {
+
+	fmt.Println("test")
+
 	var (
 		nlls       []*LogLine
 		nllCounter int
@@ -120,8 +123,6 @@ func getTailLog(path string, tail int) ([]*LogLine, error) {
 		// the incoming array is FIFO; we want FIFO so
 		// reverse the slice read order
 		for j := len(i) - 1; j >= 0; j-- {
-
-			fmt.Println("test")
 
 			// lines that are "" are junk
 			if len(i[j]) < 1 {
