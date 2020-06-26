@@ -121,7 +121,7 @@ func getTailLog(path string, tail int) ([]*LogLine, error) {
 		// reverse the slice read order
 		for j := len(i) - 1; j >= 0; j-- {
 
-			fmt.Println(j)
+			fmt.Println(i[j])
 
 			// lines that are "" are junk
 			if len(i[j]) < 1 {
