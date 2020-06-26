@@ -53,6 +53,9 @@ type LogLine struct {
 
 // GetLogFile returns an hp tail for a container given options
 func GetLogFile(path string, options *LogOptions) (*tail.Tail, []*LogLine, error) {
+
+	fmt.Println("test")
+
 	var (
 		whence  int
 		err     error
@@ -78,8 +81,6 @@ func GetLogFile(path string, options *LogOptions) (*tail.Tail, []*LogLine, error
 }
 
 func getTailLog(path string, tail int) ([]*LogLine, error) {
-
-	fmt.Println("test")
 
 	var (
 		nlls       []*LogLine
